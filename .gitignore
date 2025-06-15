@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+.apk
+.aab
+/app/debug/bee-movie-script-v1.0-signed.apk

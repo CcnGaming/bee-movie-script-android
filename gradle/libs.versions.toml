@@ -1,0 +1,55 @@
+[versions]
+# Keep these versions consistent with your project setup.
+# Adjust to the latest stable if you want, but ensure consistency.
+androidApplication = "8.10.1" # or your current AGP version
+kotlinAndroid = "1.9.0"     # or your current Kotlin version
+# kotlinCompose is typically not needed here if setting via composeOptions in app/build.gradle.kts
+# You define the Compose compiler extension version in app/build.gradle.kts:
+# android {
+#     composeOptions {
+#         kotlinCompilerExtensionVersion = "1.5.1" # Or your specific Compose Compiler version
+#     }
+# }
+core-ktx = "1.13.1"
+lifecycle-runtime-ktx = "2.8.0"
+lifecycle-livedata-ktx = "2.8.0"
+activity-compose = "1.9.0"
+compose-bom = "2024.04.00" # Important: This version dictates all Compose UI library versions
+
+# Add explicit versions for testing libraries if they are not BOM-managed
+junit = "4.13.2"
+androidxJunit = "1.1.5"
+androidxEspressoCore = "3.5.1"
+
+[libraries]
+# Libraries with explicit version references
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle-livedata-ktx" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+
+# Compose BOM - this is the "master" version for all Compose UI libraries
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+
+# Compose UI libraries - their versions are managed by compose-bom, so they don't need 'version.ref'
+# They typically use the 'module' key for brevity, or just 'group' and 'name'.
+# These are likely your problematic lines (27 and 28 or nearby) if you incorrectly added a 'version.ref' or '()'
+androidx-ui = { module = "androidx.compose.ui:ui" }
+androidx-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-material3 = { module = "androidx.compose.material3:material3" }
+
+# Testing libraries - using explicit version.ref from [versions]
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxEspressoCore" }
+# Compose testing library - managed by compose-bom
+androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" } # For @Preview functionality
+androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" } # For instrumentation tests
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidApplication" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAndroid" }
+# No 'kotlin-compose' plugin alias here, as it's typically not explicitly applied in libs.versions.toml
+# Its compiler version is set in the app/build.gradle.kts composeOptions block.
